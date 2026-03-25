@@ -4,9 +4,10 @@ class Terminal:
     def __init__(self):
         self.path = os.getcwd()
         self.commands = {"cd": self.cmd_cd, 
-                         "ls": self.cmd_ls, 
-                         "pwd": self.cmd_pwd, 
-                         "clear": self.cmd_clear
+                        "ls": self.cmd_ls, 
+                        "pwd": self.cmd_pwd, 
+                        "clear": self.cmd_clear,
+                        "mkdir": self.cmd_mkdir
                          }
         self.history = []
 
@@ -76,3 +77,19 @@ class Terminal:
         """
         self.history.clear()
         return ""
+    
+    def cmd_mkdir(self, args):
+        """
+        Erstellt ein neues Verzeichnis
+        """
+        if not args:
+            return "Usage: mkdir <directory_name>"
+
+        dir_name = args[0]
+        new_dir_path = os.path.join(self.path, dir_name)
+
+        if os.path.exists(new_dir_path):
+            return f"Directory already exists: {new_dir_path}"
+
+        os.mkdir(new_dir_path)
+        return f"Directory created: {new_dir_path}"
